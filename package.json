@@ -1,0 +1,38 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "browserslist": [
+    "> 1%",
+    "last 3 version"
+  ],
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "autoprefixer": "^9.7.1",
+    "bootstrap": "^4.3.1",
+    "css-loader": "^3.2.0",
+    "css-mqpacker": "^7.0.0",
+    "file-loader": "^5.0.1",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.13.0",
+    "path": "^0.12.7",
+    "popper.js": "^1.16.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "swiper": "^5.2.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "babel-loader": "^8.0.6",
+    "jquery": "^3.4.1"
+  },
+  "description": ""
+}
