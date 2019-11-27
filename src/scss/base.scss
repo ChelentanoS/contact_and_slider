@@ -171,11 +171,13 @@ h1, h2, h3, h4, h5, h6 {
 	img{
 		width: 100%;
 		height: auto;
+		& ~ .slide_cont_wrapper {
+			position: absolute;
+			bottom: 20px;
+			left: 30px;
+		}
 	}
 	.slide_cont_wrapper{
-		position: absolute;
-		bottom: 20px;
-		left: 30px;
 		background-color: rgba(0,0,0,.4);
 		color: $themeColor;
 		padding: 30px 15px;

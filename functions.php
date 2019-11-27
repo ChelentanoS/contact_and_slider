@@ -262,66 +262,74 @@ class slidesMetaBox {
 		?>
         <table class="form-table">
         <tbody><?php
-		foreach ( $this->options['args'] as $param ) {
-			if ( current_user_can( $param['cap'] ) ) {
-				?>
+        foreach ( $this->options['args'] as $param ) {
+	        if ( current_user_can( $param['cap'] ) ) {
+		        ?>
                 <tr><?php
-				if ( ! $value = get_post_meta( $ID, $this->prefix . $param['id'], true ) ) {
-					$value = $param['std'];
-				}
-				switch ( $param['type'] ) {
-					case 'text':
-					{ ?>
+
+		        $value = get_post_meta( $ID, $this->prefix . $param['id'], true );
+		        if ( ! $value && isset( $param['std'] ) ) {
+			        $value = $param['std'];
+		        }
+		        switch ( $param['type'] ) {
+			        case 'text':
+			        { ?>
                         <th scope="row"><label for="<?php echo $this->prefix . $param['id'] ?>"><?php echo $param['title'] ?></label>
                         </th>
                         <td>
-                            <input name="<?php echo $this->prefix . $param['id'] ?>" type="<?php echo $param['type'] ?>"
-                                   id="<?php echo $this->prefix . $param['id'] ?>" value="<?php echo $value ?>"
-                                   placeholder="<?php echo $param['placeholder'] ?>" class="regular-text"/><br/>
-                            <span class="description"><?php echo $param['desc'] ?></span>
+                            <input name="<?php echo $this->prefix . $param['id'] ?>"
+                                   type="<?php echo $param['type'] ?>"
+                                   id="<?php echo $this->prefix . $param['id'] ?>"
+						        <?php echo isset($value) ? 'value="' . $value . '" ' : '' ?>
+						        <?php echo isset($param['placeholder']) ? 'placeholder="' . $param['placeholder'] . '" ' : '' ?>
+                                   class="regular-text"/><br/>
+					        <?php echo isset($param['desc']) ? '<span class="description">' . $param["desc"] . '</span>' : '' ?>
                         </td>
-						<?php
-						break;
-					}
-					case 'textarea':
-					{ ?>
+				        <?php
+				        break;
+			        }
+			        case 'textarea':
+			        { ?>
                         <th scope="row"><label for="<?php echo $this->prefix . $param['id'] ?>"><?php echo $param['title'] ?></label>
                         </th>
                         <td>
                             <textarea name="<?php echo $this->prefix . $param['id'] ?>"
                                       type="<?php echo $param['type'] ?>"
                                       id="<?php echo $this->prefix . $param['id'] ?>"
-                                      value="<?php echo $value ?>"
-                                      placeholder="<?php echo $param['placeholder'] ?>"
-                                      class="large-text"/><?php echo $value ?></textarea><br/>
-                            <span class="description"><?php echo $param['desc'] ?></span>
+                                      <?php echo isset($value) ? 'value="' . $value . '" ' : '' ?>
+	                            <?php echo isset($param['placeholder']) ? 'placeholder="' . $param['placeholder'] . '" ' : '' ?>
+                                      class="large-text"/><?php echo isset($value) ? $value : '' ?></textarea>
+                            <br/>
+					        <?php echo isset($param['desc']) ? '<span class="description">' . $param["desc"] . '</span>' : '' ?>
                         </td>
-						<?php
-						break;
-					}
-					case 'color':
-					{ ?>
-                        <th scope="row"><label for="<?php echo $this->prefix . $param['id'] ?>"><?php echo $param['title'] ?></label></th>
+				        <?php
+				        break;
+			        }
+			        case 'color':
+			        { ?>
+                        <th scope="row"><label for="<?php echo $this->prefix . $param['id'] ?>"><?php echo $param['title'] ?></label>
+                        </th>
                         <td>
                             <label for="<?php echo $this->prefix . $param['id'] ?>"><input
                                         name="<?php echo $this->prefix . $param['id'] ?>"
                                         type="<?php echo $param['type'] ?>"
                                         id="<?php echo $this->prefix . $param['id'] ?>"
-                                        value="<?php echo $value ?>"/>
-								<?php echo $param['desc'] ?></label>
+							        <?php echo isset($value) ? 'value="' . $value . '" ' : '' ?>/>
+						        <?php echo isset($param['desc']) ? '<span class="description">' . $param["desc"] . '</span>' : '' ?>
+                            </label>
                         </td>
-						<?php
-						break;
-					}
-				}
-				?></tr><?php
-			}
-		}
-		?></tbody></table><?php
+				        <?php
+				        break;
+			        }
+		        }
+		        ?></tr><?php
+	        }
+        }
+        ?></tbody></table><?php
 	}
 
 	function save( $post_id, $post ) {
-		if ( ! wp_verify_nonce( $_POST[ $this->options['id'] . '_wpnonce' ], $this->options['id'] ) ) {
+		if ( isset($_POST[ $this->options['id'] . '_wpnonce' ]) && ! wp_verify_nonce( $_POST[ $this->options['id'] . '_wpnonce' ], $this->options['id'] ) ) {
 			return;
 		}
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
@@ -352,19 +360,19 @@ $options = array(
 		'cap'  => 'edit_posts',
 		'args' => array(
 			array(
-				'id'    => 'slides_color',
+				'id'    => 'color',
 				'title' => 'Color',
 				'type'  => 'color',
 				'cap'   => 'edit_posts'
 			),
 			array(
-				'id'          => 'slides_title',
+				'id'          => 'title',
 				'title'       => 'Secondary Title',
 				'type'        => 'text',
 				'cap'         => 'edit_posts'
 			),
 			array(
-				'id'          => 'slides_description',
+				'id'          => 'description',
 				'title'       => 'Description',
 				'type'        => 'textarea',
 				'cap'         => 'edit_posts'

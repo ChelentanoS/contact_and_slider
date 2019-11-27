@@ -10,7 +10,8 @@ jQuery(document).ready(function ($) {
 
 
     let mySwiper = new Swiper ('.swiper-container', {
-        loop: true
+        loop: true,
+        setWrapperSize: true
     })
 });
 
